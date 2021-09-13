@@ -1,0 +1,165 @@
+print("hello world")
+
+
+(4+100)/2
+
+#최수정의 클래스입니다.
+
+# 변수 만들기.
+
+a <- 2
+a<-3
+a
+a<-c("2","3")
+a<-c("T", "F")
+
+
+#R에서 쓰이는 자료구조 유형
+#scalar, vector, matrix, array, list, dataframe, +tibble
+
+a<-1
+a
+a<-"bts"
+
+v<-c(1,2,3)
+v<-c("진호", "회훈")
+
+
+M <- matrix(c(1,2,3,4,5,6), nrow = 3)
+M <- matrix(c(1,2,3,4,5,6), nrow = 2)
+[3,2]
+[1,] -> 1번째 row의 모든 column
+[,2] -> 모든 row when column=2
+
+m2 <- matrix(c(1,2,3,4,5,6), nrow = 2, byrow=TRUE)
+m2 <- matrix(c(1,2,3,4,5,6), nrow = 2, byrow=FALSE)
+m2
+m2 <- matrix(c(1:6), nrow=2)
+
+mat1 <-c(1:3)
+mat2 <-c(4:6)
+
+matrix1 <- cbind(mat1, mat2)
+matrix2 <- rbind(mat1, mat2)
+matrix1
+matrix2
+
+matrix2[1,2]
+matrix2[2,3]
+matrix2[,1]
+matrix2[,c(2,3)]
+
+matrix1 <-matrix(c(1:9), nrow=3)
+matrix2 <-matrix(c(10:18), nrow=3)
+matrix3 <-matrix(c(19:27), nrow=3)
+matrix1
+matrix2
+matrix3
+
+ar <-array(c(matrix1, matrix2, matrix3), dim = c(3,3,3))
+ar
+#dataframe#
+
+btsname <-c("RM", "Jin", "Suga", "jhope", "jimin", "V", "JK")
+btsyear <-c(1994,1992,1993,1994,1995,1995,1997)
+btsposition <-c("rap", "vocal", "rap", "rap", "vocal", "vocal", "vocal")
+
+bts <-data.frame(btsname, btsyear, btsposition, stringsAsFactors = TRUE)
+str(bts)
+
+
+gender=factor(c("male", "female", "female", "male"))
+gender
+
+gender=factor(c("male", "female", "female", "male"), levels=c("male", "female"))
+
+
+
+
+bts$btsposition = factor(btsposition, levels=c("vocal", "rap"))
+str(bts)
+
+
+bts$age <-2021-bts$btsyear+1
+bts
+
+#null, NA의 차이
+
+bts$nullvariable <-NULL
+bts
+bts$navariable <-NA
+
+bts[1,5]<-3
+bts[2,5]<-5
+bts[3,5]<-1
+mean(bts$age)
+mean(bts$navariable, na.rm=TRUE)
+
+install.packages("dplyr")
+library(dplyr)
+x<-c(30,20,10,0)
+sqrt(mean(abs(x)))
+
+
+x %>% 
+  abs() %>% 
+  mean() %>% 
+  sqrt()
+
+help(abs)
+ceiling(3.5)
+floor(3.5)
+round(3.929293848458, digits=3)
+
+
+###filter##### case를 선택하는거에요.
+
+install.packages("nycflights13")
+library(nycflights13)
+head(flights)
+flight_df <-data.frame(flights)
+str(flight_df)
+
+
+flight_df %>% 
+  filter(month==2)
+
+flight_df %>% 
+  filter(month==2|day==1) ->flight_df_filter
+  
+table(flight_df$day, flight_df$month)
+
+flight_df %>% 
+  filter(month==2, day==1) %>% 
+  count(month)
+
+flight_df %>% 
+  filter(month>=5)
+
+flight_df %>% 
+  filter(month %in% c(5,7,10))->flight_df_filter
+str(flight_df_filter)
+flight_df %>% 
+  filter(is.na(month))
+
+bts %>% 
+  filter(!is.na(navariable))
+
+
+
+###select###
+
+select_flight_df<-flight_df %>% 
+  select(month, day)
+
+str(select_flight_df)
+
+
+flight_df %>% 
+  select(!month:origin) ->flight_df_select
+str(flight_df_select)
+
+
+flight_df %>% 
+  select(-c(month, day)) ->flight_df_select
+str(flight_df_select)
